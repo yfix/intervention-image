@@ -7,7 +7,7 @@ class Argument
     /**
      * Command with arguments
      *
-     * @var Intervention\Image\Commands\AbstractCommand
+     * @var AbstractCommand
      */
     public $command;
 
@@ -59,7 +59,7 @@ class Argument
     /**
      * Defines current argument as required
      *
-     * @return Intervention\Image\Commands\Argument
+     * @return \Intervention\Image\Commands\Argument
      */
     public function required()
     {
@@ -75,7 +75,7 @@ class Argument
     /**
      * Determines that current argument must be of given type
      *
-     * @return Intervention\Image\Commands\Argument
+     * @return \Intervention\Image\Commands\Argument
      */
     public function type($type)
     {
@@ -113,9 +113,19 @@ class Argument
                 $message = sprintf('%s accepts only string values as argument %d.', $this->getCommandName(), $this->key + 1);
                 break;
 
+            case 'array':
+                $fail =  ! is_array($value);
+                $message = sprintf('%s accepts only array as argument %d.', $this->getCommandName(), $this->key + 1);
+                break;
+
             case 'closure':
                 $fail =  ! is_a($value, '\Closure');
                 $message = sprintf('%s accepts only Closure as argument %d.', $this->getCommandName(), $this->key + 1);
+                break;
+
+            case 'digit':
+                $fail = ! $this->isDigit($value);
+                $message = sprintf('%s accepts only integer values as argument %d.', $this->getCommandName(), $this->key + 1);
                 break;
         }
 
@@ -134,7 +144,7 @@ class Argument
     /**
      * Determines that current argument value must be numeric between given values
      *
-     * @return Intervention\Image\Commands\Argument
+     * @return \Intervention\Image\Commands\Argument
      */
     public function between($x, $y)
     {
@@ -159,7 +169,7 @@ class Argument
     /**
      * Determines that current argument must be over a minimum value
      *
-     * @return Intervention\Image\Commands\Argument
+     * @return \Intervention\Image\Commands\Argument
      */
     public function min($value)
     {
@@ -181,7 +191,7 @@ class Argument
     /**
      * Determines that current argument must be under a maxiumum value
      *
-     * @return Intervention\Image\Commands\Argument
+     * @return \Intervention\Image\Commands\Argument
      */
     public function max($value)
     {
@@ -198,5 +208,16 @@ class Argument
         }
 
         return $this;
+    }
+
+    /**
+     * Checks if value is "PHP" integer (120 but also 120.0)
+     *
+     * @param  mixed $value
+     * @return boolean
+     */
+    private function isDigit($value)
+    {
+        return is_numeric($value) ? intval($value) == $value : false;
     }
 }

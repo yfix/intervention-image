@@ -5,6 +5,55 @@ namespace Intervention\Image;
 abstract class AbstractFont
 {
     /**
+     * Text to be written
+     *
+     * @var String
+     */
+    public $text;
+
+    /**
+     * Text size in pixels
+     *
+     * @var integer
+     */
+    public $size = 12;
+
+    /**
+     * Color of the text
+     *
+     * @var mixed
+     */
+    public $color = '000000';
+
+    /**
+     * Rotation angle of the text
+     *
+     * @var integer
+     */
+    public $angle = 0;
+
+    /**
+     * Horizontal alignment of the text
+     *
+     * @var String
+     */
+    public $align;
+
+    /**
+     * Vertical alignment of the text
+     *
+     * @var String
+     */
+    public $valign;
+
+    /**
+     * Path to TTF or GD library internal font file of the text
+     *
+     * @var mixed
+     */
+    public $file;
+
+    /**
      * Draws font to given image on given position
      *
      * @param  Image   $image
@@ -183,5 +232,15 @@ abstract class AbstractFont
         }
 
         return false;
+    }
+
+    /**
+     * Counts lines of text to be written
+     *
+     * @return integer
+     */
+    public function countLines()
+    {
+        return count(explode(PHP_EOL, $this->text));
     }
 }

@@ -7,13 +7,13 @@ class ResizeCanvasCommand extends \Intervention\Image\Commands\AbstractCommand
     /**
      * Resizes image boundaries
      *
-     * @param  Intervention\Image\Image $image
+     * @param  \Intervention\Image\Image $image
      * @return boolean
      */
     public function execute($image)
     {
-        $width = $this->argument(0)->type('integer')->required()->value();
-        $height = $this->argument(1)->type('integer')->required()->value();
+        $width = $this->argument(0)->type('digit')->required()->value();
+        $height = $this->argument(1)->type('digit')->required()->value();
         $anchor = $this->argument(2)->value('center');
         $relative = $this->argument(3)->type('boolean')->value();
         $bgcolor = $this->argument(4)->value();

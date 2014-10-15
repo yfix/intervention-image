@@ -9,39 +9,52 @@ class ImageManagerStatic
     /**
      * Instance of Intervention\Image\ImageManager
      *
-     * @var Intervention\Image\ImageManager
+     * @var ImageManager
      */
-    public $manager;
+    public static $manager;
 
     /**
      * Creates a new instance
      *
-     * @param Intervention\Image\ImageManager $manager
+     * @param ImageManager $manager
      */
     public function __construct(ImageManager $manager = null)
     {
-        $this->manager = $manager ? $manager : new ImageManager;
+        self::$manager = $manager ? $manager : new ImageManager;
     }
 
     /**
-     * Creates a new instance
+     * Get or create new ImageManager instance
      *
-     * @return Intervention\Image\ImageManagerStatic
+     * @return ImageManager
      */
-    public static function newInstance()
+    public static function getManager()
     {
-        return new self;
+        return self::$manager ? self::$manager : new ImageManager;
+    }
+
+    /**
+     * Statically create new custom configured image manager
+     *
+     * @param  array $config
+     *
+     * @return ImageManager
+     */
+    public static function configure(array $config = array())
+    {
+        return self::$manager = self::getManager()->configure($config);
     }
 
     /**
      * Statically initiates an Image instance from different input types
      *
      * @param  mixed $data
-     * @return Intervention\Image\Image
+     *
+     * @return \Intervention\Image\Image
      */
     public static function make($data)
     {
-        return self::newInstance()->manager->make($data);
+        return self::getManager()->make($data);
     }
 
     /**
@@ -50,11 +63,12 @@ class ImageManagerStatic
      * @param  integer $width
      * @param  integer $height
      * @param  mixed $background
-     * @return Intervention\Image\Image
+     *
+     * @return \Intervention\Image\Image
      */
     public static function canvas($width, $height, $background = null)
     {
-        return self::newInstance()->manager->canvas($width, $height, $background);
+        return self::getManager()->canvas($width, $height, $background);
     }
 
     /**
@@ -63,10 +77,11 @@ class ImageManagerStatic
      * @param  Closure  $callback
      * @param  integer  $lifetime
      * @param  boolean  $returnObj
+     *
      * @return mixed
      */
     public static function cache(Closure $callback, $lifetime = null, $returnObj = false)
     {
-        return self::newInstance()->manager->cache($callback, $lifetime, $returnObj);
+        return self::getManager()->cache($callback, $lifetime, $returnObj);
     }
 }

@@ -7,12 +7,12 @@ class PixelateCommand extends \Intervention\Image\Commands\AbstractCommand
     /**
      * Applies a pixelation effect to a given image
      *
-     * @param  Intervention\Image\Image $image
+     * @param  \Intervention\Image\Image $image
      * @return boolean
      */
     public function execute($image)
     {
-        $size = $this->argument(0)->type('integer')->value(10);
+        $size = $this->argument(0)->type('digit')->value(10);
 
         $width = $image->getWidth();
         $height = $image->getHeight();

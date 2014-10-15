@@ -5,6 +5,34 @@ namespace Intervention\Image;
 abstract class AbstractEncoder
 {
     /**
+     * Buffer of encode result data
+     *
+     * @var string
+     */
+    public $result;
+
+    /**
+     * Image object to encode
+     *
+     * @var Image
+     */
+    public $image;
+
+    /**
+     * Output format of encoder instance
+     *
+     * @var string
+     */
+    public $format;
+
+    /**
+     * Output quality of encoder instance
+     *
+     * @var integer
+     */
+    public $quality;
+    
+    /**
      * Processes and returns encoded image as JPEG string
      *
      * @return string
@@ -33,11 +61,11 @@ abstract class AbstractEncoder
     abstract protected function processTiff();
 
     /**
-     * Buffer of encode result data
+     * Processes and returns encoded image as BMP string
      *
-     * @var string
+     * @return string
      */
-    public $result;
+    abstract protected function processBmp();
 
     /**
      * Process a given image
@@ -45,7 +73,7 @@ abstract class AbstractEncoder
      * @param  Image   $image
      * @param  string  $format
      * @param  integer $quality
-     * @return Intervention\Image\Image
+     * @return Image
      */
     public function process(Image $image, $format = null, $quality = null)
     {
@@ -66,6 +94,7 @@ abstract class AbstractEncoder
 
             case 'png':
             case 'image/png':
+            case 'image/x-png':
                 $this->result = $this->processPng();
                 break;
 
@@ -73,20 +102,35 @@ abstract class AbstractEncoder
             case 'jpeg':
             case 'image/jpg':
             case 'image/jpeg':
+            case 'image/pjpeg':
                 $this->result = $this->processJpeg();
                 break;
 
             case 'tif':
             case 'tiff':
             case 'image/tiff':
+            case 'image/tif':
+            case 'image/x-tif':
+            case 'image/x-tiff':
                 $this->result = $this->processTiff();
+                break;
+
+            case 'bmp':
+            case 'image/bmp':
+            case 'image/ms-bmp':
+            case 'image/x-bitmap':
+            case 'image/x-bmp':
+            case 'image/x-ms-bmp':
+            case 'image/x-win-bitmap':
+            case 'image/x-windows-bmp':
+            case 'image/x-xbitmap':
+                $this->result = $this->processBmp();
                 break;
                 
             default:
                 throw new \Intervention\Image\Exception\NotSupportedException(
                     "Encoding format ({$format}) is not supported."
                 );
-                break;
         }
 
         return $image->setEncoded($this->result);
@@ -99,16 +143,18 @@ abstract class AbstractEncoder
      */
     protected function processDataUrl()
     {
+        $mime = $this->image->mime ? $this->image->mime : 'image/png';
+
         return sprintf('data:%s;base64,%s',
-            $this->image->mime,
-            base64_encode($this->process($this->image, null, $this->quality))
+            $mime,
+            base64_encode($this->process($this->image, $mime, $this->quality))
         );
     }
 
     /**
      * Sets image to process
      *
-     * @param Intervention\Image\Image $image
+     * @param Image $image
      */
     protected function setImage($image)
     {

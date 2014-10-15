@@ -7,7 +7,7 @@ class Color extends \Intervention\Image\AbstractColor
     /**
      * ImagickPixel containing current color information
      *
-     * @var ImagickPixel
+     * @var \ImagickPixel
      */
     public $pixel;
 
@@ -15,7 +15,7 @@ class Color extends \Intervention\Image\AbstractColor
      * Initiates color object from integer
      *
      * @param  integer $value
-     * @return Intervention\Image\AbstractColor
+     * @return \Intervention\Image\AbstractColor
      */
     public function initFromInteger($value)
     {
@@ -32,7 +32,7 @@ class Color extends \Intervention\Image\AbstractColor
      * Initiates color object from given array
      *
      * @param  array $value
-     * @return Intervention\Image\AbstractColor
+     * @return \Intervention\Image\AbstractColor
      */
     public function initFromArray($array)
     {
@@ -57,7 +57,8 @@ class Color extends \Intervention\Image\AbstractColor
      * Initiates color object from given string
      *
      * @param  string $value
-     * @return Intervention\Image\AbstractColor
+     *
+     * @return \Intervention\Image\AbstractColor
      */
     public function initFromString($value)
     {
@@ -70,7 +71,8 @@ class Color extends \Intervention\Image\AbstractColor
      * Initiates color object from given ImagickPixel object
      *
      * @param  ImagickPixel $value
-     * @return Intervention\Image\AbstractColor
+     *
+     * @return \Intervention\Image\AbstractColor
      */
     public function initFromObject($value)
     {
@@ -85,7 +87,8 @@ class Color extends \Intervention\Image\AbstractColor
      * @param  integer $r
      * @param  integer $g
      * @param  integer $b
-     * @return Intervention\Image\AbstractColor
+     *
+     * @return \Intervention\Image\AbstractColor
      */
     public function initFromRgb($r, $g, $b)
     {
@@ -99,7 +102,8 @@ class Color extends \Intervention\Image\AbstractColor
      * @param  integer $g
      * @param  integer $b
      * @param  float   $a
-     * @return Intervention\Image\AbstractColor
+     *
+     * @return \Intervention\Image\AbstractColor
      */
     public function initFromRgba($r, $g, $b, $a)
     {
@@ -125,6 +129,7 @@ class Color extends \Intervention\Image\AbstractColor
      * Calculates hexadecimal value of current color instance
      *
      * @param  string $prefix
+     *
      * @return string
      */
     public function getHex($prefix = '')
@@ -236,7 +241,7 @@ class Color extends \Intervention\Image\AbstractColor
     /**
      * Initiates ImagickPixel from given RGBA values
      *
-     * @return ImagickPixel
+     * @return \ImagickPixel
      */
     private function setPixel($r, $g, $b, $a = null)
     {
@@ -250,7 +255,7 @@ class Color extends \Intervention\Image\AbstractColor
     /**
      * Returns current color as ImagickPixel
      *
-     * @return ImagickPixel
+     * @return \ImagickPixel
      */
     public function getPixel()
     {

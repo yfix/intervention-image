@@ -8,7 +8,7 @@ abstract class AbstractColor
      * Initiates color object from integer
      *
      * @param  integer $value
-     * @return Intervention\Image\AbstractColor
+     * @return \Intervention\Image\AbstractColor
      */
     abstract public function initFromInteger($value);
 
@@ -16,7 +16,7 @@ abstract class AbstractColor
      * Initiates color object from given array
      *
      * @param  array $value
-     * @return Intervention\Image\AbstractColor
+     * @return \Intervention\Image\AbstractColor
      */
     abstract public function initFromArray($value);
 
@@ -24,7 +24,7 @@ abstract class AbstractColor
      * Initiates color object from given string
      *
      * @param  string $value
-     * @return Intervention\Image\AbstractColor
+     * @return \Intervention\Image\AbstractColor
      */
     abstract public function initFromString($value);
 
@@ -32,7 +32,7 @@ abstract class AbstractColor
      * Initiates color object from given ImagickPixel object
      *
      * @param  ImagickPixel $value
-     * @return Intervention\Image\AbstractColor
+     * @return \Intervention\Image\AbstractColor
      */
     abstract public function initFromObject($value);
 
@@ -42,7 +42,7 @@ abstract class AbstractColor
      * @param  integer $r
      * @param  integer $g
      * @param  integer $b
-     * @return Intervention\Image\AbstractColor
+     * @return \Intervention\Image\AbstractColor
      */
     abstract public function initFromRgb($r, $g, $b);
 
@@ -53,7 +53,7 @@ abstract class AbstractColor
      * @param  integer $g
      * @param  integer $b
      * @param  float   $a
-     * @return Intervention\Image\AbstractColor
+     * @return \Intervention\Image\AbstractColor
      */
     abstract public function initFromRgba($r, $g, $b, $a);
 
@@ -109,7 +109,7 @@ abstract class AbstractColor
      * Parses given value as color
      *
      * @param  mixed $value
-     * @return Intervention\Image\AbstractColor
+     * @return \Intervention\Image\AbstractColor
      */
     public function parse($value)
     {
@@ -139,7 +139,6 @@ abstract class AbstractColor
                 throw new \Intervention\Image\Exception\NotReadableException(
                     "Color format ({$value}) cannot be read."
                 );
-                break;
         }
 
         return $this;
@@ -157,31 +156,25 @@ abstract class AbstractColor
 
             case 'rgba':
                 return $this->getRgba();
-                break;
 
             case 'hex':
                 return $this->getHex('#');
-                break;
 
             case 'int':
             case 'integer':
                 return $this->getInt();
-                break;
 
             case 'array':
                 return $this->getArray();
-                break;
 
             case 'obj':
             case 'object':
                 return $this;
-                break;
 
             default:
                 throw new \Intervention\Image\Exception\NotSupportedException(
                     "Color format ({$type}) is not supported."
                 );
-                break;
         }
     }
 
